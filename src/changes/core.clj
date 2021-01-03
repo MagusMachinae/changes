@@ -3,7 +3,7 @@
             [clojure.string :as str]))
 
 
-(def values {
+(def hexagram-names {
              [7,7,7,7,7,7] "#1, Ch'ien, The Creative",
              [8,8,8,8,8,8] "#2, K'un, The Receptive",
              [7 8 8 8 7 8] "#3, Chun, Difficulty at the Beginning",
