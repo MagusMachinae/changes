@@ -83,12 +83,25 @@
     (- z
        (+ (normalise-hands left)
           (normalise-hands right)
-          1) ))
+          1) )))
 
-  )
+(defn i-ching []
+  (let [antecedent 49
+        gua (map #(/ % 4) (repeatedly 6 #(last (take 4 (iterate pick-hands antecedent)))))]
+    (print (str/join "\n" (parse-hands gua)
+                          ()))))
 
-(map parse-hands (map #(/ % 4) (repeatedly 6 #(last (take 4 (iterate pick-hands 49))))))
+(print (str/join "\n"
+                 (conj (into []
+                         (map parse-hands
+                              (map #(/ % 4)
+                                   (repeatedly 6
+                                               #(last (take 4 (iterate pick-hands 49)))))))
+                       (apply ))))
 (int (/ 36 4))
+(map gua1 (map #(/ % 4)
+                 (repeatedly 6
+                             #(last (take 4 (iterate pick-hands 49))))))
 (repeatedly 10 pick-hands)
 (let [x (rand-int 49)]
   (int (/ (- 47 (+ (normalise-hands x) (normalise-hands (- 48 x)))) 4)))
