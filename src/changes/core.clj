@@ -125,20 +125,29 @@
     6 8
     num))
 
+(defn check-change [gua]
+  (if (not= (map gua1 gua) (map gua2 gua))
+     (str (get hexagram-names (map gua1 gua) ", static."))
+     (str (get hexagram-names (map gua1 gua))
+          "->"
+          (get hexagram-names (map gua2 gua)))))
+
 (def m-parse-hands
   (memoize parse-hands))
 
-(defn parse-trigrams [gua]
-  )
+;(defn parse-trigrams [gua]
+;  )
 
 (defn changes
   "I don't do a whole lot."
   []
   ())
 
-;(defn parse-6-9 [coll]
-;  (let [coll-length (length coll)]
+;(defn parse-6-9 [gua]
+;  (for [val gua]
 ;    ()))
+
+(get hexagram-names [8,7,7,8,7,8])
 
 (def ba [
          "_______"
