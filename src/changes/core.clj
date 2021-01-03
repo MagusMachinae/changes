@@ -69,7 +69,7 @@
              [7,8,7,8,7,8] "#63, Chi Chi, After Completion",
              [8,7,8,7,8,7] "#64, Wei Chi, Before Completion"})
 
-(defn normalise-hands [hands]
+(defn normalise-hands [hand]
   (if (zero? (mod hand 4))
     4
     (mod hand 4)))
@@ -87,7 +87,7 @@
 
   )
 
-(last (take 3 (iterate pick-hands 49)))
+(map parse-hands (map #(/ % 4) (repeatedly 6 #(last (take 4 (iterate pick-hands 49))))))
 (int (/ 36 4))
 (repeatedly 10 pick-hands)
 (let [x (rand-int 49)]
@@ -139,4 +139,4 @@
 
 (clojure.pprint/pprint {:a 1 :b 3 :c {:d 4 :e 5} :g 1234567 :h 23049 :j 329847234 :ff 2})
 
-(pprint ba)
+;(pprint ba)
