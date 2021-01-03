@@ -84,28 +84,6 @@
        (+ (normalise-hands left)
           (normalise-hands right)
           1) )))
-
-(defn i-ching []
-  (let [antecedent 49
-        gua (map #(/ % 4) (repeatedly 6 #(last (take 4 (iterate pick-hands antecedent)))))]
-    (print (str/join "\n" (parse-hands gua)
-                          ()))))
-
-(print (str/join "\n"
-                 (conj (into []
-                         (map parse-hands
-                              (map #(/ % 4)
-                                   (repeatedly 6
-                                               #(last (take 4 (iterate pick-hands 49)))))))
-                       (apply ))))
-(int (/ 36 4))
-(map gua1 (map #(/ % 4)
-                 (repeatedly 6
-                             #(last (take 4 (iterate pick-hands 49))))))
-(repeatedly 10 pick-hands)
-(let [x (rand-int 49)]
-  (int (/ (- 47 (+ (normalise-hands x) (normalise-hands (- 48 x)))) 4)))
-(map normalise-hands (repeatedly 5 #(rand-int 49)))
 (defn parse-hands [val]
   (case val
     7 "_______"
@@ -121,16 +99,38 @@
 
 (defn gua2 [num]
   (case num
-    9 7
-    6 8
+    9 8
+    6 7
     num))
 
 (defn check-change [gua]
-  (if (not= (map gua1 gua) (map gua2 gua))
+  (if (= (map gua1 gua) (map gua2 gua))
      (str (get hexagram-names (map gua1 gua) ", static."))
      (str (get hexagram-names (map gua1 gua))
           "->"
           (get hexagram-names (map gua2 gua)))))
+
+(defn i-ching []
+  (let [antecedent 49
+        gua (map #(/ % 4) (repeatedly 6 #(last (take 4 (iterate pick-hands antecedent)))))]
+    (print (str/join "\n" (conj (into [] (map parse-hands gua))
+                                (check-change (reverse gua)))))))
+(i-ching)
+(print (str/join "\n"
+                 (conj (into []
+                         (map parse-hands
+                              (map #(/ % 4)
+                                   (repeatedly 6
+                                               #(last (take 4 (iterate pick-hands 49)))))))
+                       (apply ))))
+(int (/ 36 4))
+(map gua1 (map #(/ % 4)
+                 (repeatedly 6
+                             #(last (take 4 (iterate pick-hands 49))))))
+(repeatedly 10 pick-hands)
+(let [x (rand-int 49)]
+  (int (/ (- 47 (+ (normalise-hands x) (normalise-hands (- 48 x)))) 4)))
+(map normalise-hands (repeatedly 5 #(rand-int 49)))
 
 (def m-parse-hands
   (memoize parse-hands))
