@@ -174,13 +174,14 @@
             (rotations coll))))
 
 (defn string-permutations [s]
-  (map (fn [x] (apply str x)) (trampoline permutations s)))
+  (map (fn [x] (apply str x)) (permutations s)))
 
 
 
 (inits "abc")
 (rotations "abc")
 (trampoline permutations "abc")
+(permutations "abc")
 (tails "abc")
 (iterate rest "abc")
 
