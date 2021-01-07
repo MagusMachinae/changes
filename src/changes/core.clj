@@ -105,10 +105,13 @@
 
 (defn check-change [gua]
   (if (= (map gua1 gua) (map gua2 gua))
-     (str (get hexagram-names (map gua1 gua) ", static."))
+     (str (get hexagram-names (map gua1 gua)) ", static.")
      (str (get hexagram-names (map gua1 gua))
           "->"
           (get hexagram-names (map gua2 gua)))))
+(defn parse-6-9 [num]
+  (for [val (range 6)]
+    ))
 
 (defn i-ching []
   (let [antecedent 49
@@ -135,6 +138,7 @@
 (def m-parse-hands
   (memoize parse-hands))
 
+
 ;(defn parse-trigrams [gua]
 ;  )
 
@@ -142,10 +146,6 @@
   "I don't do a whole lot."
   []
   ())
-
-;(defn parse-6-9 [gua]
-;  (for [val gua]
-;    ()))
 
 (get hexagram-names [8,7,7,8,7,8])
 
@@ -160,5 +160,39 @@
 ;(apply)
 
 (clojure.pprint/pprint {:a 1 :b 3 :c {:d 4 :e 5} :g 1234567 :h 23049 :j 329847234 :ff 2})
+
+(defn tails [coll]
+    (take (inc (count coll)) (iterate rest coll)))
+(defn inits [seq]
+  (reverse (map reverse (tails (reverse seq)))))
+(defn rotations [seq]
+   (rest (map concat (tails seq) (inits seq))))
+(defn permutations [coll]
+  (if (empty? coll)
+    (list '())
+    (mapcat (fn [[x & xs]] (map #(cons x %) (permutations xs)))
+            (rotations coll))))
+
+(defn string-permutations [s]
+  (map (fn [x] (apply str x)) (trampoline permutations s)))
+
+
+
+(inits "abc")
+(rotations "abc")
+(trampoline permutations "abc")
+(tails "abc")
+(iterate rest "abc")
+
+(empty? "abc")
+(seq? "abc")
+(mapcat (fn [[x & xs]] (map #(cons x %) (permutations xs))
+          )
+        (rotations "abc"))
+
+((fn [[x & xs]] (list x (list xs))) "abc")
+
+(defn )
+
 
 ;(pprint ba)
