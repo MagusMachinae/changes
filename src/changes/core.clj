@@ -102,6 +102,13 @@
     9 8
     6 7
     num))
+(def trigram-map-keys
+  [:top
+   :fifth
+   :fourth
+   :third
+   :second
+   :bottom] )
 
 (defn check-change [gua]
   (if (= (map gua1 gua) (map gua2 gua))
@@ -109,25 +116,32 @@
      (str (get hexagram-names (map gua1 gua))
           "->"
           (get hexagram-names (map gua2 gua)))))
-(defn parse-6-9 [num]
-  (for [val (range 6)]
-    ))
-
+(defn parse-6-9 [gua]
+  (for [[k v] (zipmap trigram-map-keys gua)]
+    (if (or (= v 6)
+            (= v 9))
+      (str v " in the " (symbol k) " place.")
+      )))
+(symbol :blah)
 (defn i-ching []
   (let [antecedent 49
-        gua (map #(/ % 4) (repeatedly 6 #(last (take 4 (iterate pick-hands antecedent)))))]
-    (print (str/join "\n" (conj (into [] (map parse-hands gua))
-                                (check-change (reverse gua)))))))
+        gua (map #(/ % 4)
+                 (repeatedly 6 #(last (take 4 (iterate pick-hands antecedent)))))]
+    (print (str/join "\n" (flatten (conj (into [] (map parse-hands gua))
+                                         (check-change (reverse gua))
+                                         (into [] (filter (fn [x] (not (nil? x)))
+                                                          (parse-6-9 gua)))))))))
 (i-ching)
+
 (print (str/join "\n"
                  (conj (into []
                          (map parse-hands
                               (map #(/ % 4)
                                    (repeatedly 6
                                                #(last (take 4 (iterate pick-hands 49)))))))
-                       (apply ))))
+                       )))
 (int (/ 36 4))
-(map gua1 (map #(/ % 4)
+(parse-6-9 (map #(/ % 4)
                  (repeatedly 6
                              #(last (take 4 (iterate pick-hands 49))))))
 (repeatedly 10 pick-hands)
@@ -159,7 +173,7 @@
 
 ;(apply)
 
-(clojure.pprint/pprint {:a 1 :b 3 :c {:d 4 :e 5} :g 1234567 :h 23049 :j 329847234 :ff 2})
+(clojure.pprint/pprint {:a 1 :b 3 :c {:d 4 :e 5} :g 12345678 :h 23049 :j 329847234 :ff 2})
 
 (defn tails [coll]
     (take (inc (count coll)) (iterate rest coll)))
@@ -181,13 +195,13 @@
 (inits "abc")
 (rotations "abc")
 (trampoline permutations "abc")
-(permutations "abc")
+(string-permutations "caltechs")
 (tails "abc")
 (iterate rest "abc")
 
 (empty? "abc")
 (seq? "abc")
-(mapcat (fn [[x & xs]] (map #(cons x %) (permutations xs))
+(map (fn [[x & xs]] (map #(cons x %) (permutations xs))
           )
         (rotations "abc"))
 
