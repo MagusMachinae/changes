@@ -117,10 +117,10 @@
           "->"
           (get hexagram-names (map gua2 gua)))))
 (defn parse-6-9 [gua]
-  (for [[k v] (zipmap trigram-map-keys gua)]
-    (if (or (= v 6)
-            (= v 9))
-      (str v " in the " (symbol k) " place.")
+  (for [[key value] (zipmap trigram-map-keys gua)]
+    (if (or (= value 6)
+            (= value 9))
+      (str value " in the " (symbol key) " place.")
       )))
 (symbol :blah)
 (defn i-ching []
