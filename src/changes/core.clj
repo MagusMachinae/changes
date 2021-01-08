@@ -127,10 +127,11 @@
   (let [antecedent 49
         gua (map #(/ % 4)
                  (repeatedly 6 #(last (take 4 (iterate pick-hands antecedent)))))]
-    (print (str/join "\n" (flatten (conj (into [] (map parse-hands gua))
-                                         (check-change (reverse gua))
-                                         (into [] (filter (fn [x] (not (nil? x)))
-                                                          (parse-6-9 gua)))))))))
+    (print (str/join "\n" (flatten (conj
+                                     (filter (fn [x] (not (nil? x)))
+                                       (parse-6-9 gua))
+                                     (check-change (reverse gua))
+                                     (map parse-hands gua)))))))
 (i-ching)
 
 (print (str/join "\n"
